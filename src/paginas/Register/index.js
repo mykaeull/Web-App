@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { RegisterUser } from '../../utils'
+import { useHistory } from 'react-router-dom'
 import './styles.css'
 
 function Register() {
@@ -11,18 +12,22 @@ function Register() {
         password: ''
     })
 
-    const [teste, setTeste] = useState(null)
+    const history = useHistory()
+
+    //const [teste, setTeste] = useState(null)
 
     const getData = async (data) => {
         const response = await RegisterUser(data)
-        //console.log(response)
-        setTeste(response)
-        //console.log('aquii')
+        if (response === undefined) {
+            console.log('Registration failed')
+        } else {
+            history.push('/')
+        }
     }
 
     return (
         <div className="container-register">
-            <h2 >Name</h2>
+            <h2 >Nome</h2>
             <input type="text" onChange={(e) => {
                 setData({...data, name: e.target.value})
             }} />
@@ -30,7 +35,7 @@ function Register() {
             <input type="text" onChange={(e) => {
                 setData({...data, email: e.target.value})
             }} />
-            <h2 >Password</h2>
+            <h2 >Senha</h2>
             <input style={{marginBottom: "30px"}} type="password" onChange={(e) => {
                 setData({...data, password: e.target.value})
             }} />
